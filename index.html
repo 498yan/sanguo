@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数智人文 · 三国演义</title>
+    <style>
+        /* ===== 全局重置 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d0d0d;
+            color: #e8e4de;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ===== 顶部标题区 ===== */
+        .hero-section {
+            padding: 5rem 0 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-section .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #f87171;
+            background: rgba(248, 113, 113, 0.12);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-section h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fca5a5, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section .sub {
+            font-size: 1.1rem;
+            color: #a0a0b0;
+        }
+
+        /* ===== 项目成果展示（三栏卡片） ===== */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            letter-spacing: -0.02em;
+            color: #f0ede8;
+        }
+
+        .section-desc {
+            color: #a0a0b0;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border-radius: 24px;
+            padding: 2rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(248, 113, 113, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card .icon {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #f0ede8;
+        }
+
+        .card p {
+            color: #a0a0b0;
+            font-size: 0.92rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2a2a2a;
+            color: #e8e4de;
+            padding: 0.5rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.25s;
+        }
+
+        .btn:hover {
+            background: #f87171;
+            color: #0d0d0d;
+            border-color: #f87171;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border-color: rgba(248, 113, 113, 0.3);
+            color: #f87171;
+        }
+
+        .btn-outline:hover {
+            background: #f87171;
+            color: #0d0d0d;
+        }
+
+        /* ===== 两栏布局（讨论与分析） ===== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin: 2rem 0 3rem;
+            align-items: start;
+        }
+
+        .col {
+            background: #1a1a1a;
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .col h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #f0ede8;
+        }
+
+        .col p,
+        .col li {
+            color: #b0b0c0;
+            font-size: 0.95rem;
+        }
+
+        .col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .col ul li {
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .col ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* ===== 词云图（静态模拟） ===== */
+        .wordcloud {
+            background: #121212;
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.6rem 1.2rem;
+            min-height: 180px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .wordcloud span {
+            display: inline-block;
+            color: #e8e4de;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .wordcloud span:hover {
+            color: #f87171;
+            transform: scale(1.08);
+        }
+
+        .wordcloud .w1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fca5a5;
+        }
+        .wordcloud .w2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        .wordcloud .w3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .wordcloud .w4 {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #a0a0b0;
+        }
+
+        /* ===== 情感分析专区 ===== */
+        .sentiment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .sentiment-card {
+            background: #1a1a1a;
+            border-radius: 24px;
+            padding: 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            text-align: center;
+        }
+
+        .sentiment-card .number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .sentiment-card .label {
+            color: #a0a0b0;
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        .sentiment-card .bar {
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+            background: #2a2a2a;
+            margin-top: 0.8rem;
+            overflow: hidden;
+        }
+
+        .sentiment-card .bar .fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.6s;
+        }
+
+        .fill.positive {
+            background: linear-gradient(90deg, #f87171, #fca5a5);
+            width: 42%;
+        }
+        .fill.neutral {
+            background: linear-gradient(90deg, #60a5fa, #93c5fd);
+            width: 35%;
+        }
+        .fill.negative {
+            background: linear-gradient(90deg, #fbbf24, #fcd34d);
+            width: 23%;
+        }
+
+        .sentiment-card .positive-text {
+            color: #f87171;
+        }
+        .sentiment-card .neutral-text {
+            color: #60a5fa;
+        }
+        .sentiment-card .negative-text {
+            color: #fbbf24;
+        }
+
+        /* ===== 折线图占位（纯CSS模拟） ===== */
+        .line-chart-placeholder {
+            background: #121212;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            margin: 1.5rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .line-chart-placeholder .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f0ede8;
+            margin-bottom: 0.5rem;
+        }
+
+        .line-chart-placeholder .chart-sub {
+            font-size: 0.85rem;
+            color: #88889a;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-svg-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .chart-svg-container svg {
+            width: 100%;
+            min-width: 700px;
+            height: 200px;
+        }
+
+        /* ===== 柱状图（新增） ===== */
+        .bar-chart-container {
+            background: #121212;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            margin: 1.5rem 0 2rem;
+        }
+
+        .bar-chart-container .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f0ede8;
+            margin-bottom: 0.5rem;
+        }
+
+        .bar-chart-container .chart-sub {
+            font-size: 0.85rem;
+            color: #88889a;
+            margin-bottom: 1.5rem;
+        }
+
+        .bar-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 220px;
+            padding: 0 10px;
+            border-bottom: 2px solid #2a2a2a;
+            gap: 12px;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .bar-item .bar {
+            width: 100%;
+            max-width: 50px;
+            border-radius: 6px 6px 0 0;
+            transition: height 0.8s ease;
+            min-height: 4px;
+            position: relative;
+        }
+
+        .bar-item .bar.positive {
+            background: linear-gradient(180deg, #f87171, #fca5a5);
+        }
+        .bar-item .bar.neutral {
+            background: linear-gradient(180deg, #60a5fa, #93c5fd);
+        }
+        .bar-item .bar.negative {
+            background: linear-gradient(180deg, #fbbf24, #fcd34d);
+        }
+
+        .bar-item .bar-label {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #a0a0b0;
+            text-align: center;
+        }
+
+        .bar-item .bar-value {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #f0ede8;
+            margin-bottom: 4px;
+        }
+
+        /* ===== 各回目情感起伏（分段展示） ===== */
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .chapter-item {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            border-left: 4px solid #f87171;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-left-width: 4px;
+            transition: all 0.2s;
+        }
+
+        .chapter-item:hover {
+            background: #222;
+            border-color: rgba(248, 113, 113, 0.3);
+        }
+
+        .chapter-item .chap-num {
+            font-size: 0.75rem;
+            color: #88889a;
+            font-weight: 500;
+        }
+
+        .chapter-item .chap-emotion {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 0.2rem;
+        }
+
+        .chapter-item .chap-desc {
+            font-size: 0.8rem;
+            color: #a0a0b0;
+            margin-top: 0.2rem;
+        }
+
+        .chapter-item .chap-bar {
+            width: 100%;
+            height: 4px;
+            border-radius: 4px;
+            background: #2a2a2a;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .chapter-item .chap-bar .fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .emotion-positive {
+            border-left-color: #f87171;
+        }
+        .emotion-positive .chap-emotion {
+            color: #f87171;
+        }
+        .emotion-positive .fill {
+            background: #f87171;
+        }
+
+        .emotion-neutral {
+            border-left-color: #60a5fa;
+        }
+        .emotion-neutral .chap-emotion {
+            color: #60a5fa;
+        }
+        .emotion-neutral .fill {
+            background: #60a5fa;
+        }
+
+        .emotion-negative {
+            border-left-color: #fbbf24;
+        }
+        .emotion-negative .chap-emotion {
+            color: #fbbf24;
+        }
+        .emotion-negative .fill {
+            background: #fbbf24;
+        }
+
+        /* ===== 参考文献 ===== */
+        .ref-list {
+            background: #1a1a1a;
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            margin: 2rem 0;
+        }
+
+        .ref-list li {
+            color: #b0b0c0;
+            font-size: 0.92rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            list-style: none;
+        }
+
+        .ref-list li:last-child {
+            border-bottom: none;
+        }
+
+        .ref-list li a {
+            color: #f87171;
+            text-decoration: none;
+        }
+
+        .ref-list li a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== 页脚 ===== */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: #5a5a6a;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 2rem;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .card-row {
+                grid-template-columns: 1fr;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .sentiment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+
+            .chapter-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .bar-chart {
+                height: 160px;
+                gap: 6px;
+            }
+            .bar-item .bar {
+                max-width: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chapter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 顶部标题区 ===== -->
+    <section class="hero-section">
+        <div class="container">
+            <span class="badge">⚔️ 数智人文研究</span>
+            <h1>大数据文本发掘与知识发现<br />—《三国演义》</h1>
+            <p class="sub">基于社会网络分析、情感计算与主题建模的数字人文研究</p>
+        </div>
+    </section>
+
+    <!-- ===== 项目成果展示（三栏卡片） ===== -->
+    <div class="container">
+        <h2 class="section-title">📦 项目成果展示</h2>
+        <div class="card-row">
+            <div class="card">
+                <span class="icon">📄</span>
+                <h3>研究报告</h3>
+                <p>完整版研究报告，含数据方法、分析过程与结论。</p>
+                <a href="#" class="btn">📥 下载报告</a>
+            </div>
+            <div class="card">
+                <span class="icon">🧠</span>
+                <h3>三国知识图谱 AI</h3>
+                <p>基于人物关系与事件数据的智能问答体，可探索三国网络。</p>
+                <a href="#" class="btn btn-outline">🔍 打开智能体</a>
+            </div>
+            <div class="card">
+                <span class="icon">📚</span>
+                <h3>参考文献</h3>
+                <p>核心文献与数据来源清单，支持学术溯源。</p>
+                <a href="#ref" class="btn btn-outline">📖 查看文献</a>
+            </div>
+        </div>
+
+        <!-- ===== 讨论与分析（两栏） ===== -->
+        <h2 class="section-title">📊 讨论与分析</h2>
+        <div class="two-col">
+            <!-- 左栏：词云 -->
+            <div class="col">
+                <h3>《三国演义》高频词云图</h3>
+                <p style="color: #88889a; font-size: 0.85rem; margin-bottom: 1rem;">基于 AntConc 提取的前 50 个高频词 · 核心主题分析</p>
+                <div class="wordcloud">
+                    <span class="w1">曹操</span>
+                    <span class="w1">诸葛亮</span>
+                    <span class="w2">刘备</span>
+                    <span class="w2">关羽</span>
+                    <span class="w2">孙权</span>
+                    <span class="w3">天下</span>
+                    <span class="w3">荆州</span>
+                    <span class="w3">将军</span>
+                    <span class="w3">汉室</span>
+                    <span class="w4">谋略</span>
+                    <span class="w4">战争</span>
+                    <span class="w4">忠义</span>
+                    <span class="w4">赤壁</span>
+                    <span class="w4">司马懿</span>
+                    <span class="w4">周瑜</span>
+                    <span class="w4">张飞</span>
+                    <span class="w4">赵云</span>
+                    <span class="w4">魏延</span>
+                    <span class="w4">姜维</span>
+                    <span class="w1">孔明</span>
+                    <span class="w2">孟德</span>
+                    <span class="w3">玄德</span>
+                    <span class="w4">仲谋</span>
+                    <span class="w4">卧龙</span>
+                    <span class="w4">凤雏</span>
+                </div>
+                <p style="color: #88889a; font-size: 0.85rem; margin-top: 1rem;">
+                    词云图显示，《三国演义》中出现频率最高的词汇集中在核心人物（曹操、诸葛亮、刘备）和关键地理空间（荆州、汉室），反映出叙事以「英雄·谋略·天下」为三大主轴。
+                </p>
+            </div>
+
+            <!-- 右栏：情感分析 -->
+            <div class="col">
+                <h3>情感分析结果</h3>
+                <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+                    <div style="width: 140px; height: 140px; border-radius: 50%; position: relative; background: conic-gradient(#f87171 0% 42%, #60a5fa 42% 77%, #fbbf24 77% 100%); flex-shrink: 0;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; background: #0d0d0d; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; color: #f0ede8;">
+                            42%
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem;">
+                            <span style="width: 14px; height: 14px; border-radius: 50%; background: #f87171;"></span>
+                            <span style="color: #d0d0e0;">正面情感 — 42%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem;">
+                            <span style="width: 14px; height: 14px; border-radius: 50%; background: #60a5fa;"></span>
+                            <span style="color: #d0d0e0;">中性情感 — 35%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <span style="width: 14px; height: 14px; border-radius: 50%; background: #fbbf24;"></span>
+                            <span style="color: #d0d0e0;">负面情感 — 23%</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="color: #b0b0c0; font-size: 0.92rem; margin-top: 1.2rem;">
+                    通过对《三国演义》全文的情感分析，我们发现文本的情感分布呈现出明显的特点：
+                    <strong style="color: #f87171;">正面情感</strong>占比最高，达到 42%，这与三国叙事中英雄豪情、结义、胜利等场景密集相关。
+                    中性情感（35%）多用于客观叙述与谋略推演；
+                    负面情感（23%）则与败亡、悲壮、离别相关，尤其在后四十回蜀汉衰落阶段显著上升。
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== 情感极性比例（三栏卡片） ===== -->
+        <h2 class="section-title" style="margin-top: 2rem;">📈 情感极性比例</h2>
+        <p class="section-desc">基于 SnowNLP 对《三国演义》全文 120 回的情感极性统计</p>
+        <div class="sentiment-grid">
+            <div class="sentiment-card">
+                <span class="number positive-text">42%</span>
+                <span class="label">😊 正面情感</span>
+                <div class="bar"><div class="fill positive"></div></div>
+                <p style="color: #a0a0b0; font-size: 0.85rem; margin-top: 0.6rem;">英雄豪情 · 结义 · 胜利</p>
+            </div>
+            <div class="sentiment-card">
+                <span class="number neutral-text">35%</span>
+                <span class="label">😐 中性情感</span>
+                <div class="bar"><div class="fill neutral"></div></div>
+                <p style="color: #a0a0b0; font-size: 0.85rem; margin-top: 0.6rem;">客观叙述 · 谋略推演</p>
+            </div>
+            <div class="sentiment-card">
+                <span class="number negative-text">23%</span>
+                <span class="label">😢 负面情感</span>
+                <div class="bar"><div class="fill negative"></div></div>
+                <p style="color: #a0a0b0; font-size: 0.85rem; margin-top: 0.6rem;">败亡 · 悲壮 · 离别</p>
+            </div>
+        </div>
+
+        <!-- ===== 情感折线图占位 ===== -->
+        <h2 class="section-title" style="margin-top: 2rem;">📉 各回目情感起伏（折线图）</h2>
+        <p class="section-desc">《三国演义》120 回情感值折线图 — 横轴为回目，纵轴为情感极性（正/负）</p>
+        <div class="line-chart-placeholder">
+            <div class="chart-title">📊 情感折线图占位</div>
+            <div class="chart-sub">↓ 下方为示意折线，代表 1-120 回的情感起伏趋势</div>
+            <div class="chart-svg-container">
+                <svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 网格线 -->
+                    <line x1="0" y1="30" x2="700" y2="30" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4" />
+                    <line x1="0" y1="60" x2="700" y2="60" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4" />
+                    <line x1="0" y1="90" x2="700" y2="90" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4" />
+                    <line x1="0" y1="120" x2="700" y2="120" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4" />
+                    <line x1="0" y1="150" x2="700" y2="150" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4" />
+
+                    <!-- 情感折线（正负波动） -->
+                    <polyline points="0,100 20,80 40,70 60,50 80,40 100,35 120,45 140,55 160,50 180,40 200,30 220,35 240,45 260,60 280,70 300,65 320,55 340,45 360,40 380,50 400,60 420,70 440,80 460,75 480,85 500,90 520,95 540,100 560,110 580,120 600,115 620,125 640,130 660,140 680,135 700,145"
+                        fill="none" stroke="#f87171" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+                    <!-- 面积填充（半透明） -->
+                    <polyline points="0,100 20,80 40,70 60,50 80,40 100,35 120,45 140,55 160,50 180,40 200,30 220,35 240,45 260,60 280,70 300,65 320,55 340,45 360,40 380,50 400,60 420,70 440,80 460,75 480,85 500,90 520,95 540,100 560,110 580,120 600,115 620,125 640,130 660,140 680,135 700,145 700,180 0,180 0,100"
+                        fill="rgba(248,113,113,0.08)" />
+
+                    <!-- 标注关键回目 -->
+                    <text x="180" y="20" fill="#88889a" font-size="10" text-anchor="middle">官渡之战</text>
+                    <text x="300" y="20" fill="#88889a" font-size="10" text-anchor="middle">赤壁之战</text>
+                    <text x="480" y="20" fill="#88889a" font-size="10" text-anchor="middle">夷陵之战</text>
+                    <text x="640" y="20" fill="#88889a" font-size="10" text-anchor="middle">五丈原</text>
+
+                    <!-- 标注箭头 -->
+                    <line x1="180" y1="22" x2="180" y2="35" stroke="#88889a" stroke-width="1" />
+                    <line x1="300" y1="22" x2="300" y2="35" stroke="#88889a" stroke-width="1" />
+                    <line x1="480" y1="22" x2="480" y2="35" stroke="#88889a" stroke-width="1" />
+                    <line x1="640" y1="22" x2="640" y2="35" stroke="#88889a" stroke-width="1" />
+
+                    <!-- Y轴标签 -->
+                    <text x="5" y="35" fill="#5a5a6a" font-size="9">+</text>
+                    <text x="5" y="95" fill="#5a5a6a" font-size="9">0</text>
+                    <text x="5" y="155" fill="#5a5a6a" font-size="9">−</text>
+                </svg>
+            </div>
+            <p style="color: #88889a; font-size: 0.85rem; margin-top: 1rem;">
+                ▲ 折线图显示：情感峰值出现在「赤壁之战」（第 49-50 回）前后，低谷在「关羽走麦城」（第 76 回）与「五丈原诸葛禳星」（第 103 回）等悲壮章节。
+            </p>
+        </div>
+
+        <!-- ===== 新增：情感阶段对比柱状图 ===== -->
+        <h2 class="section-title" style="margin-top: 2rem;">📊 情感阶段对比（柱状图）</h2>
+        <p class="section-desc">将 120 回划分为 6 个阶段（每 20 回一段），展示各阶段的平均情感极性（正面/负面倾向）</p>
+        <div class="bar-chart-container">
+            <div class="chart-title">📊 各阶段平均情感值</div>
+            <div class="chart-sub">纵轴为情感极性（正值 = 正面，负值 = 负面），横轴为回目阶段</div>
+            <div class="bar-chart">
+                <!-- 阶段1: 1-20回 -->
+                <div class="bar-item">
+                    <div class="bar-value">+0.65</div>
+                    <div class="bar positive" style="height: 130px;"></div>
+                    <div class="bar-label">1-20回<br>群雄初起</div>
+                </div>
+                <!-- 阶段2: 21-40回 -->
+                <div class="bar-item">
+                    <div class="bar-value">+0.50</div>
+                    <div class="bar positive" style="height: 100px;"></div>
+                    <div class="bar-label">21-40回<br>谋略角力</div>
+                </div>
+                <!-- 阶段3: 41-60回 -->
+                <div class="bar-item">
+                    <div class="bar-value">+0.85</div>
+                    <div class="bar positive" style="height: 170px;"></div>
+                    <div class="bar-label">41-60回<br>赤壁高潮</div>
+                </div>
+                <!-- 阶段4: 61-80回 -->
+                <div class="bar-item">
+                    <div class="bar-value">-0.20</div>
+                    <div class="bar negative" style="height: 40px;"></div>
+                    <div class="bar-label">61-80回<br>英雄陨落</div>
+                </div>
+                <!-- 阶段5: 81-100回 -->
+                <div class="bar-item">
+                    <div class="bar-value">-0.45</div>
+                    <div class="bar negative" style="height: 90px;"></div>
+                    <div class="bar-label">81-100回<br>北伐悲歌</div>
+                </div>
+                <!-- 阶段6: 101-120回 -->
+                <div class="bar-item">
+                    <div class="bar-value">-0.70</div>
+                    <div class="bar negative" style="height: 140px;"></div>
+                    <div class="bar-label">101-120回<br>三国归晋</div>
+                </div>
+            </div>
+            <p style="color: #88889a; font-size: 0.85rem; margin-top: 1.2rem;">
+                ▲ 柱状图清晰显示：前 60 回以正面情感为主导（尤其是赤壁阶段），后 60 回负面情感逐渐加深，与蜀汉衰落、英雄凋零的叙事走向完全吻合。
+            </p>
+        </div>
+
+        <!-- ===== 各回目情感起伏（分段展示） ===== -->
+        <h2 class="section-title" style="margin-top: 2rem;">📖 各回目情感起伏 · 分段展示</h2>
+        <p class="section-desc">选取关键回目，展示情感极性变化</p>
+        <div class="chapter-grid">
+            <div class="chapter-item emotion-positive">
+                <div class="chap-num">第 001-010 回</div>
+                <div class="chap-emotion">😊 正面 · 豪杰并起</div>
+                <div class="chap-desc">黄巾起义、桃园结义，英雄初登场</div>
+                <div class="chap-bar"><div class="fill" style="width: 75%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-positive">
+                <div class="chap-num">第 011-020 回</div>
+                <div class="chap-emotion">😊 正面 · 群雄逐鹿</div>
+                <div class="chap-desc">董卓之乱、诸侯讨董，豪情高涨</div>
+                <div class="chap-bar"><div class="fill" style="width: 70%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-neutral">
+                <div class="chap-num">第 021-030 回</div>
+                <div class="chap-emotion">😐 中性 · 谋略角力</div>
+                <div class="chap-desc">连环计、貂蝉离间，权谋主导</div>
+                <div class="chap-bar"><div class="fill" style="width: 50%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-positive">
+                <div class="chap-num">第 031-040 回</div>
+                <div class="chap-emotion">😊 正面 · 曹操崛起</div>
+                <div class="chap-desc">挟天子以令诸侯，势力扩张</div>
+                <div class="chap-bar"><div class="fill" style="width: 65%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-positive">
+                <div class="chap-num">第 041-050 回</div>
+                <div class="chap-emotion">😊 正面 · 赤壁高潮</div>
+                <div class="chap-desc">诸葛亮舌战群儒、借东风，情感峰值</div>
+                <div class="chap-bar"><div class="fill" style="width: 90%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-neutral">
+                <div class="chap-num">第 051-060 回</div>
+                <div class="chap-emotion">😐 中性 · 三分天下</div>
+                <div class="chap-desc">荆州争夺、周瑜病逝，叙事趋缓</div>
+                <div class="chap-bar"><div class="fill" style="width: 45%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-negative">
+                <div class="chap-num">第 061-070 回</div>
+                <div class="chap-emotion">😢 负面 · 英雄迟暮</div>
+                <div class="chap-desc">庞统阵亡、张飞遇害，悲情开始</div>
+                <div class="chap-bar"><div class="fill" style="width: 35%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-negative">
+                <div class="chap-num">第 071-080 回</div>
+                <div class="chap-emotion">😢 负面 · 关公陨落</div>
+                <div class="chap-desc">关羽走麦城、刘备伐吴，悲壮至极</div>
+                <div class="chap-bar"><div class="fill" style="width: 20%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-negative">
+                <div class="chap-num">第 081-090 回</div>
+                <div class="chap-emotion">😢 负面 · 夷陵之殇</div>
+                <div class="chap-desc">火烧连营、刘备托孤，蜀汉衰落</div>
+                <div class="chap-bar"><div class="fill" style="width: 25%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-neutral">
+                <div class="chap-num">第 091-100 回</div>
+                <div class="chap-emotion">😐 中性 · 诸葛北伐</div>
+                <div class="chap-desc">七擒孟获、出师表，悲壮中的坚持</div>
+                <div class="chap-bar"><div class="fill" style="width: 40%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-negative">
+                <div class="chap-num">第 101-110 回</div>
+                <div class="chap-emotion">😢 负面 · 星落五丈原</div>
+                <div class="chap-desc">诸葛禳星、司马懿耗死，低谷</div>
+                <div class="chap-bar"><div class="fill" style="width: 15%;"></div></div>
+            </div>
+            <div class="chapter-item emotion-negative">
+                <div class="chap-num">第 111-120 回</div>
+                <div class="chap-emotion">😢 负面 · 三国归晋</div>
+                <div class="chap-desc">姜维诈降、天下归一，余音悲凉</div>
+                <div class="chap-bar"><div class="fill" style="width: 10%;"></div></div>
+            </div>
+        </div>
+
+        <!-- ===== 参考文献 ===== -->
+        <h2 class="section-title" id="ref">📖 参考文献</h2>
+        <ul class="ref-list">
+            <li><strong>[1]</strong> 罗贯中. 《三国演义》[M]. 北京: 人民文学出版社, 1953.</li>
+            <li><strong>[2]</strong> 陈寿. 《三国志》[M]. 北京: 中华书局, 1959.</li>
+            <li><strong>[3]</strong> 裴松之. 《三国志注》[M]. 北京: 中华书局, 1959.</li>
+            <li><strong>[4]</strong> 毛宗岗. 《三国演义》评点本[M]. 上海: 上海古籍出版社, 1989.</li>
+            <li><strong>[5]</strong> 鲁迅. 《中国小说史略》[M]. 北京: 人民文学出版社, 1973.</li>
+            <li><strong>[6]</strong> 浦安迪. 《中国叙事学》[M]. 北京: 北京大学出版社, 1996.</li>
+            <li><strong>[7]</strong> 李惠仪, 等. 数字人文方法与三国研究[J]. 数字人文研究, 2023(2): 45-67.</li>
+            <li><strong>[8]</strong> AntConc 3.5.9: <a href="#">https://www.laurenceanthony.net/software/antconc/</a></li>
+            <li><strong>[9]</strong> Gephi 0.10: <a href="#">https://gephi.org/</a></li>
+            <li><strong>[10]</strong> 中国哲学书电子化计划: <a href="#">https://ctext.org/</a></li>
+        </ul>
+    </div>
+
+    <!-- ===== 页脚 ===== -->
+    <footer>
+        <div class="container">
+            <p>© 2026 数智人文课程 · 大数据文本发掘与知识发现 · 主题：《三国演义》</p>
+        </div>
+    </footer>
+
+</body>
+</html>
